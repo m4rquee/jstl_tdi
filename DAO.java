@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package maligno;
+package proj.tdi_projeto_jstl;
 
 import java.io.IOException;
 import java.sql.ResultSet;
