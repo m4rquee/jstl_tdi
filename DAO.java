@@ -1,21 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package proj.tdi_projeto_jstl;
 
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
+import java.sql.ResultSet;
+import java.util.Iterator;
+import java.io.IOException;
+import java.util.Map.Entry;
+import java.sql.SQLException;
 
 /**
- *
- * @author u15194
+ * @author Tiago Pereira Dall'Oca
  */
 public class DAO {
 
@@ -23,23 +17,26 @@ public class DAO {
 					throws SQLException {
 		String sql = "INSERT INTO " + tabela + " (";
 		String valores = " values(";
+
 		for (Iterator<Map.Entry<Object, Object>> it = map.entrySet().iterator(); it.hasNext();) {
 			sql += it.next().getKey();
 			valores += "?";
+
 			if (it.hasNext()) {
 				sql += ",";
 				valores += ",";
 			}
 		}
+
 		sql += ")";
 		valores += ")";
 
 		db.prepareStatement(sql + valores);
 
 		int i = 1;
-		for (Object value : map.values()) {
+		for (Object value : map.values()) 
 			db.setObject(i++, value);
-		}
+		
 		db.executeUpdate();
 		db.commit();
 	}
@@ -64,9 +61,9 @@ public class DAO {
 
 		for (Iterator<Map.Entry<Object, Object>> it = map.entrySet().iterator(); it.hasNext();) {
 			set += it.next().getKey() + "= ?";
-			if(it.hasNext()){
-				set += ", ";
-			}
+
+			if(it.hasNext())
+				set += ", ";	
 		}
 
 		db.prepareStatement(sql + set + where);
@@ -74,9 +71,9 @@ public class DAO {
 		db.setObject(map.size() + 1, id.getValue());
 
 		int i = 1;
-		for (Object value : map.values()) {
+		for (Object value : map.values()) 
 			db.setObject(i++, value);
-		}
+		
 		db.executeUpdate();
 		db.commit();
 	}
@@ -85,16 +82,15 @@ public class DAO {
 					throws SQLException {
 		String sql = "DELETE " + tabela + " WHERE";
 
-		for (Entry<Object, Object> e : map.entrySet()) {
+		for (Entry<Object, Object> e : map.entrySet()) 
 			sql += " " + e.getKey() + "= ?";
-		}
 
 		db.prepareStatement(sql);
 
 		int i = 1;
-		for (Object value : map.values()) {
+		for (Object value : map.values()) 
 			db.setObject(i++, value);
-		}
+		
 		db.executeUpdate();
 		db.commit();
 	}
