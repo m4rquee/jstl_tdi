@@ -18,10 +18,10 @@
 			<font size="10">
 			<h1>DOENÇA</h1>
 			</font>
-			<form id="contact" action="" method="post">
+			<form id="contact" action="hue.jsp" method="post">
 				<h3>Cadastrar</h3>
 				<fieldset>
-					<input placeholder="Doença" type="text" tabindex="1" required autofocus>
+					<input name="doenca" placeholder="Doença" type="text" tabindex="1" required autofocus>
 				</fieldset>
 
 				<fieldset>
@@ -29,28 +29,24 @@
 				</fieldset>
 				<input type="hidden" name="_method" value="PUT">
 			</form>
-			<form id="contact" action="" method="post">
+			<form id="contact" action="hue.jsp" method="post">
 				<h3>Visualizar</h3>
 				<fieldset>
-					<input placeholder="ID" type="number" tabindex="1" required autofocus>
+					<input name="id" placeholder="ID" type="number" tabindex="1" required autofocus>
 				</fieldset>
-				<fieldset>
-					<input placeholder="Doença" type="text" tabindex="1" required autofocus>
-				</fieldset>
-
 				<fieldset>
 					<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
 				</fieldset>
 				
 				<input type="hidden" name="_method" value="GET">
 			</form>
-			<form id="contact" action="" method="post">
+			<form id="contact" action="hue.jsp" method="post">
 				<h3>Atualizar</h3>
 				<fieldset>
-					<input placeholder="ID" type="number" tabindex="1" required autofocus>
+					<input name="id" placeholder="ID" type="number" tabindex="1" required autofocus>
 				</fieldset>
 				<fieldset>
-					<input placeholder="Doença" type="text" tabindex="1" required autofocus>
+					<input name="doenca" placeholder="Doença" type="text" tabindex="1" required autofocus>
 				</fieldset>
 
 				<fieldset>
@@ -58,10 +54,10 @@
 				</fieldset>
 				<input type="hidden" name="_method" value="UPDATE">
 			</form>
-			<form id="contact" action="" method="post">
+			<form id="contact" action="hue.jsp" method="post">
 				<h3>Deletar</h3>
 				<fieldset>
-					<input placeholder="ID" type="number" tabindex="1" required autofocus>
+					<input name="id" placeholder="ID" type="number" tabindex="1" required autofocus>
 				</fieldset>
 				<fieldset>
 					<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>

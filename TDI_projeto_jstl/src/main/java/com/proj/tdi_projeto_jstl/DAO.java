@@ -39,23 +39,23 @@ public class DAO {
 		db.commit();
 	}
 
-	public static MeuResultSet Pesquisa(MeuPreparedStatement db, String tabela, Map.Entry<Object, Object> e)
+	public static MeuResultSet Pesquisa(MeuPreparedStatement db, String tabela, String s, Object id)
 					throws SQLException {
-		String sql = "SELECT * FROM " + tabela + " WHERE " + e.getKey() + "= ?";
+		String sql = "SELECT * FROM " + tabela + " WHERE " + s + "= ?";
 
 		db.prepareStatement(sql);
-		db.setObject(1, e.getValue());
+		db.setObject(1, id);
 
 		return (MeuResultSet) db.executeQuery();
 	}
 
-	public static void Atualiza(MeuPreparedStatement db, String tabela, Map.Entry<Object, Object> id, Map<Object, Object> map)
+	public static void Atualiza(MeuPreparedStatement db, String tabela, String s, Object id, Map<Object, Object> map)
 					throws SQLException {
 		String sql = "UPDATE " + tabela;
 		String set = " SET ";
 		String where = " WHERE ";
 
-		where += id.getKey() + "=?";
+		where += s + "=?";
 
 		for (Iterator<Map.Entry<Object, Object>> it = map.entrySet().iterator(); it.hasNext();) {
 			set += it.next().getKey() + "= ?";
@@ -66,7 +66,7 @@ public class DAO {
 
 		db.prepareStatement(sql + set + where);
 
-		db.setObject(map.size() + 1, id.getValue());
+		db.setObject(map.size() + 1, id);
 
 		int i = 1;
 		for (Object value : map.values()) {
