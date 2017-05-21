@@ -8,65 +8,115 @@
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.AbstractMap"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
 
 <c:set var="method" value="${pageContext.request.getParameter('_method')}"></c:set>
 <c:set var="id" value="${pageContext.request.getParameter('id')}"></c:set>
-<c:set var="doenca" value="${pageContext.request.getParameter('doenca')}"></c:set>
+<c:set var="nome" value="${pageContext.request.getParameter('doenca')}"></c:set>
 
-TODO ADD DRIVER AND CONNECTION
 
-	<html>
-		<head>
-			<title>Start Page</title>
-			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%-- <sql:setDataSource var  = "db" driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+									 url  = "jdbc:sqlserver://localhost:9432;databaseName=My"
+									 user = "tiago" password = "T0pSecret"/>
+--%>
 
-			<link rel="stylesheet" type="text/css" href="style.css">
-		</head>
-		<body>
+<sql:setDataSource var  = "db" driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+									 url  = "jdbc:sqlserver://regulus;databaseName=BD15182"
+									 user = "BD15182" password = "BD15182"/>
 
-			<div class="container">
-				<br>
-				<br>
-				<br>
-				<font size="10">
-				<h1>DOENÇA</h1>
-				</font>
-				
-			<jsp:useBean id="hue" class="java.util.LinkedHashMap"/>
+<html>
+	<head>
+		<title>Start Page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+
+		<div class="container">
+			<br>
+			<br>
+			<br>
+			<font size="10">
+			<h1>DOENÇA</h1>
+			<br>
+			<br>
+			</font>
 
 			<c:choose>
 
 				<c:when test = "${method eq 'PUT'}">
-					${hue.put("nome", doenca)}
-					${DAO.Inserir(db, "Doenca", hue)}
+					<sql:update dataSource = "${db}" var = "_">
+						INSERT INTO Doenca VALUES (?)
+						<sql:param value = "${nome}" />
+					</sql:update>
+					<sql:query dataSource = "${db}" var = "doenca">
+						SELECT * FROM Doenca WHERE nome = ?
+						<sql:param value = "${nome}" />
+					</sql:query>
+					<c:forEach var="row" items="${doenca.rows}">
+						<form>
+							<fieldset>
+								<input type="text" value="${row.id}">
+							</fieldset>
+							<fieldset>
+								<input type="text" value="${row.nome}">
+							</fieldset>
+						</form>
+					</c:forEach>
 				</c:when>
 
 				<c:when test = "${method eq 'GET'}">
-					<c:set var="doenca" value="${DAO.Pesquisa(db, 'Doenca', 'id', id).next()}"></c:set>
-					<c:out value="${id}"></c:out>
-					<c:out value="${doenca}"></c:out>
-					<c:out value="${method}"></c:out>
-					<c:choose>
-						<c:when test = "${doenca ne null}">
-							<form>
-								<fieldset>
-									<input type="text" value="${doenca.getString('id')}">
-								</fieldset>
-								<fieldset>
-									<input type="text" value="${doenca.getString('nome')}">
-								</fieldset>
-							</form>
-						</c:when>
-					</c:choose>
+					<sql:query dataSource = "${db}" var = "doenca">
+						SELECT * FROM Doenca WHERE id = ?
+						<sql:param value = "${id}" />
+					</sql:query>
+					<c:forEach var="row" items="${doenca.rows}">
+						<form>
+							<fieldset>
+								<input type="text" value="${row.id}">
+							</fieldset>
+							<fieldset>
+								<input type="text" value="${row.nome}">
+							</fieldset>
+						</form>
+					</c:forEach>
 				</c:when>
 
 				<c:when test = "${method eq 'POST'}">
-					${DAO.Atualizar(db, "Doenca", hue)}
+					<sql:update dataSource = "${db}" var = "_">
+						UPDATE Doenca SET nome = ? WHERE id = ?
+						<sql:param value = "${nome}" />
+						<sql:param value = "${id}" />
+					</sql:update>
+					<sql:query dataSource = "${db}" var = "doenca">
+						SELECT * FROM Doenca WHERE id = ?
+						<sql:param value = "${id}" />
+					</sql:query>
+					<c:forEach var="row" items="${doenca.rows}">
+						<form>
+							<fieldset>
+								<input type="text" value="${row.id}">
+							</fieldset>
+							<fieldset>
+								<input type="text" value="${row.nome}">
+							</fieldset>
+						</form>
+					</c:forEach>
 				</c:when>
 
 				<c:when test = "${method eq 'DELETE'}">
-					${hue.put("id", doenca)}
-					${DAO.Inserir(db, "Doenca", hue)}
+					<sql:query dataSource = "${db}" var = "doenca">
+						SELECT * FROM Doenca WHERE id = ?
+						<sql:param value = "${id}" />
+					</sql:query>
+					<c:forEach var="row" items="${doenca.rows}">
+						<h1>${row.nome.toUpperCase()} EXTERMINADO </h1>
+					</c:forEach>
+					<sql:update dataSource = "${db}" var = "_">
+						DELETE Doenca WHERE id = ?
+						<sql:param value = "${id}" />
+					</sql:update>
 				</c:when>
 			</c:choose>
 		</div>

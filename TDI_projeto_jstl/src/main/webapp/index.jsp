@@ -52,7 +52,7 @@
 				<fieldset>
 					<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
 				</fieldset>
-				<input type="hidden" name="_method" value="UPDATE">
+				<input type="hidden" name="_method" value="POST">
 			</form>
 			<form id="contact" action="hue.jsp" method="post">
 				<h3>Deletar</h3>
