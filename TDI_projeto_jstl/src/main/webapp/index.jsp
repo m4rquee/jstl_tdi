@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 
-<%@page import="com.proj.tdi_projeto_jstl.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <html>
