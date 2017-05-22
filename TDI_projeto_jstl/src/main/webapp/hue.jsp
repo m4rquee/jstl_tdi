@@ -21,7 +21,7 @@
 --%>
 
 <sql:setDataSource var  = "db" driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
-									 url  = "jdbc:sqlserver://regulus;databaseName=BD15182"
+									 url  = "jdbc:sqlserver://regulus:1433;databasename=BD15182"
 									 user = "BD15182" password = "BD15182"/>
 
 <html>
