@@ -25,7 +25,7 @@
 
 <html>
   <head>
-    <title>Start Page</title>
+    <title>Página de resposta</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -44,7 +44,14 @@
       <c:choose>
 
         <c:when test = "${method eq 'PUT'}">
-          <sql:update dataSource = "${db}" var = "_">
+          <sql:query dataSource = "${db}" var = "doenca">
+            SELECT * FROM Doenca WHERE nome = ?
+            <sql:param value = "${nome}" />
+          </sql:query>
+
+          <c:choose>
+            <c:when test="${doenca.rowCount eq 0}">
+              <sql:update dataSource = "${db}" var = "_">
             INSERT INTO Doenca VALUES (?)
             <sql:param value = "${nome}" />
           </sql:update>
@@ -64,6 +71,13 @@
               </fieldset>
             </form>
           </c:forEach>
+            </c:when>
+            <c:otherwise>
+              <form id="contact">
+                <h3>Sem resultados</h3>
+              </form>
+            </c:otherwise>
+          </c:choose>
         </c:when>
 
         <c:when test = "${method eq 'GET'}">
@@ -106,7 +120,7 @@
           <c:choose>
             <c:when test="${doenca.rowCount eq 0}">
               <form id="contact">
-                <h3>Sem resultados</h3>
+                <h3>Não existe</h3>
               </form>
             </c:when>
             <c:otherwise>
@@ -133,7 +147,7 @@
           <c:choose>
             <c:when test="${doenca.rowCount eq 0}">
               <form id="contact">
-                <h3>Sem resultados</h3>
+                <h3>Não existe</h3>
               </form>
             </c:when>
             <c:otherwise>
